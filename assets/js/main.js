@@ -18,14 +18,17 @@ THEN the saved events persist */
 var today = new Date();
 let todayDate = toMonthName(today.getMonth()+1)+" "+today.getDay()+"   Year"+today.getFullYear();
 let currentHour = today.getHours();
-console.log(currentHour,"time?");
 let curDateEl = $('#currentDate');
+let curTimeEl = $('#currentTime');
 let scheduleDisplay = $('#mainDisplay');
 
 curDateEl.text(todayDate);
-
+curTimeEl.text("Time:"+ currentHour+":"+today.getMinutes() );
 // so let's create the time blocks.
+
 function toMonthName(monthNumber) {
+// source https://bobbyhadz.com/
+// Author Borislav Hadzhiev
     const date = new Date();
     date.setMonth(monthNumber - 1);
   
@@ -65,10 +68,10 @@ for(let i in timeBlocks){
     listElement.append(saveElement);
 
     scheduleDisplay.append(listElement);
-    if(10 === timeBlocks[i]){
+    if(currentHour === timeBlocks[i]){
         listElement.attr('class','currentHourEvent');
     }
-    if(10 > timeBlocks[i]){
+    if(currentHour > timeBlocks[i]){
         listElement.attr('class','pastHourEvent');
     }
 }
