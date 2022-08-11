@@ -16,7 +16,21 @@ header {
     display: flex;
     justify-content: space-between;
     padding: 5px;
-    
+}
+
+.pastHourEvent {
+    border: 3px solid black;
+    background-color:lightcoral;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+.currentHourEvent {
+    border: 3px solid black;
+    background-color: lightgoldenrodyellow;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
 }
 
 h2 {

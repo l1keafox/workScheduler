@@ -15,22 +15,33 @@ THEN the saved events persist */
 
 
 // THEN the current day is displayed at the top of the calendar
-let todayDate = "Friday, March 4th  Year 2020";
-
+var today = new Date();
+let todayDate = toMonthName(today.getMonth()+1)+" "+today.getDay()+"   Year"+today.getFullYear();
+let currentHour = today.getHours();
+console.log(currentHour,"time?");
 let curDateEl = $('#currentDate');
 let scheduleDisplay = $('#mainDisplay');
 
 curDateEl.text(todayDate);
 
 // so let's create the time blocks.
-
-let timeBlocks = [7,8,9,10,11,12,1,2,3,4,5,6];
+function toMonthName(monthNumber) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+  
+    return date.toLocaleString('en-US', {
+      month: 'long',
+    });
+  }
+  
+//let timeBlocks = [7,8,9,10,11,12,1,2,3,4,5,6];
+let timeBlocks = [7,8,9,10,11,12,13,14,15,16,17,18]; 
 
 for(let i in timeBlocks){
     //
     let timeString = timeBlocks[i]+":00";
+    
     let listElement = $('<li>');
-//    listElement.text(timeString);
     listElement.attr('class','listHourEvent');
     listElement.attr('data-time',timeBlocks[i]);
 
@@ -54,13 +65,18 @@ for(let i in timeBlocks){
     listElement.append(saveElement);
 
     scheduleDisplay.append(listElement);
+    if(10 === timeBlocks[i]){
+        listElement.attr('class','currentHourEvent');
+    }
+    if(10 > timeBlocks[i]){
+        listElement.attr('class','pastHourEvent');
+    }
 }
 
 function getNote(time){
     // this function will see if there is an note saved or not.
     // right now it will return empty;
     let note = localStorage.getItem(time);
-    console.log("getting note?,",time,note);
     if(note){
         return note;
     }
@@ -68,11 +84,8 @@ function getNote(time){
 }
 
 function saveNote(event){
-    let eventTime = $(event.target).parent().attr('data-time');
-    localStorage.setItem( eventTime ,$(event.target).parent().children('.noteEvent').val() );
-    //displayLetterEl.text(.attr('data-letter'));
+    localStorage.setItem( $(event.target).parent().attr('data-time') ,$(event.target).parent().children('.noteEvent').val() );
 }
-//let timeBlocks = [7,8,9,10,11,12,13,14,15,16,17,18]; if we do european
 // timeBlocks is the data structure
 /*an Event will have
 {
