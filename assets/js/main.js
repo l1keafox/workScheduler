@@ -31,23 +31,46 @@ for(let i in timeBlocks){
     let timeString = timeBlocks[i]+":00";
     let listElement = $('<li>');
 //    listElement.text(timeString);
-listElement.attr('class','listHourEvent');
-listElement.attr('data-time',timeBlocks[i]);
+    listElement.attr('class','listHourEvent');
+    listElement.attr('data-time',timeBlocks[i]);
 
     let timeElement = $('<h2>');
     timeElement.attr('class','timeEvent');
     timeElement.text(timeString);
     listElement.append(timeElement);
+
     let noteElement = $('<textarea>');
     noteElement.attr('class','noteEvent');
+    noteElement.val( getNote(timeBlocks[i]) );
     listElement.append(noteElement);
 
     let saveElement = $('<button>');
     saveElement.attr('class','saveEvent');
     saveElement.text('save:💾')
+
+
+    listElement.on('click',saveNote);
+
     listElement.append(saveElement);
 
     scheduleDisplay.append(listElement);
+}
+
+function getNote(time){
+    // this function will see if there is an note saved or not.
+    // right now it will return empty;
+    let note = localStorage.getItem(time);
+    console.log("getting note?,",time,note);
+    if(note){
+        return note;
+    }
+    return " ";
+}
+
+function saveNote(event){
+    let eventTime = $(event.target).parent().attr('data-time');
+    localStorage.setItem( eventTime ,$(event.target).parent().children('.noteEvent').val() );
+    //displayLetterEl.text(.attr('data-letter'));
 }
 //let timeBlocks = [7,8,9,10,11,12,13,14,15,16,17,18]; if we do european
 // timeBlocks is the data structure
