@@ -38,8 +38,8 @@ textarea {
     background-color: lightblue;
 }
 .pastHourEvent {
-    background-color:lightcoral;
+    background-color:grey;
 }
 .currentHourEvent {
-    background-color: lightgoldenrodyellow;
+    background-color: lightcoral;
 }

@@ -1,11 +1,10 @@
 /*
 GIVEN I am using a daily planner to create a schedule
 WHEN I open the planner
- */
+*/
 
-
-
-var today = new Date();
+// Global vars.
+let today = new Date();
 let todayDate = toMonthName(today.getMonth()+1)+" "+today.getDate()+"   Year"+today.getFullYear();
 let currentHour = today.getHours();
 let curDateEl = $('#currentDate');
@@ -14,7 +13,13 @@ let scheduleDisplay = $('#mainDisplay');
 
 // THEN the current day is displayed at the top of the calendar
 curDateEl.text(todayDate);
-curTimeEl.text("Time:"+ currentHour+":"+today.getMinutes() );
+let displayHour = today.getHours();
+if(displayHour > 12 ) displayHour-=12;
+let minutes =today.getMinutes(); 
+if( minutes < 10){
+    minutes = "0"+minutes;
+}
+curTimeEl.text("Time:"+ displayHour+":"+minutes );
 
 function toMonthName(monthNumber) {
 // source https://bobbyhadz.com/
@@ -39,8 +44,18 @@ function getHourString(number){
     return (number-12) +":00PM"
 }
 
+function getNote(time){
+    let note = localStorage.getItem(time);
+    if(note){
+        return note;
+    }
+    return " ";
+}
+
+function saveNote(event){
+    localStorage.setItem( $(event.target).parent().attr('data-time') ,$(event.target).parent().children('.noteEvent').val() );
+}
   // so let's create the time blocks.
-  //let timeBlocks = [7,8,9,10,11,12,1,2,3,4,5,6];
 let timeBlocks = [7,8,9,10,11,12,13,14,15,16,17,18]; 
 // THEN I am presented with timeblocks for standard business hours
 for(let i in timeBlocks){
@@ -93,16 +108,4 @@ for(let i in timeBlocks){
     if(currentHour > timeBlocks[i]){
         listElement.attr('class','pastHourEvent');
     }
-}
-
-function getNote(time){
-    let note = localStorage.getItem(time);
-    if(note){
-        return note;
-    }
-    return " ";
-}
-
-function saveNote(event){
-    localStorage.setItem( $(event.target).parent().attr('data-time') ,$(event.target).parent().children('.noteEvent').val() );
 }
