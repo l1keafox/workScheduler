@@ -3,15 +3,7 @@ GIVEN I am using a daily planner to create a schedule
 WHEN I open the planner
 
 WHEN I scroll down
-THEN I am presented with timeblocks for standard business hours
-WHEN I view the timeblocks for that day
-THEN each timeblock is color coded to indicate whether it is in the past, present, or future
-WHEN I click into a timeblock
-THEN I can enter an event
-WHEN I click the save button for that timeblock
-THEN the text for that event is saved in local storage
-WHEN I refresh the page
-THEN the saved events persist */
+ */
 
 
 // THEN the current day is displayed at the top of the calendar
@@ -39,6 +31,7 @@ function toMonthName(monthNumber) {
   
 //let timeBlocks = [7,8,9,10,11,12,1,2,3,4,5,6];
 let timeBlocks = [7,8,9,10,11,12,13,14,15,16,17,18]; 
+// THEN I am presented with timeblocks for standard business hours
 
 for(let i in timeBlocks){
     //
@@ -53,21 +46,28 @@ for(let i in timeBlocks){
     timeElement.text(timeString);
     listElement.append(timeElement);
 
+    //WHEN I click into a timeblock
+//    THEN I can enter an event
     let noteElement = $('<textarea>');
     noteElement.attr('class','noteEvent');
+//    WHEN I refresh the page
+//    THEN the saved events persist
     noteElement.val( getNote(timeBlocks[i]) );
     listElement.append(noteElement);
 
-    let saveElement = $('<button>');
+//    WHEN I click the save button for that timeblock
+//    THEN the text for that event is saved in local storage
+let saveElement = $('<button>');
     saveElement.attr('class','saveEvent');
     saveElement.text('save:💾')
 
-
     listElement.on('click',saveNote);
-
     listElement.append(saveElement);
 
     scheduleDisplay.append(listElement);
+//    WHEN I view the timeblocks for that day
+//    THEN each timeblock is color coded to indicate whether it is in the past, present, or future
+    
     if(currentHour === timeBlocks[i]){
         listElement.attr('class','currentHourEvent');
     }
