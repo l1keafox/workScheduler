@@ -36,11 +36,9 @@ function getHourString(number){
     if(number === 12){
         return number+":00PM"
     } 
-
     if(number < 13){
         return number+":00AM"
     } 
-
     return (number-12) +":00PM"
 }
 
@@ -59,7 +57,7 @@ function saveNote(event){
 let timeBlocks = [7,8,9,10,11,12,13,14,15,16,17,18]; 
 // THEN I am presented with timeblocks for standard business hours
 for(let i in timeBlocks){
-/* Element structure with css class links.
+/* Element structure with class attr.
         <li class ="listHourEvent">
             <h2 class="timeEvent"> 11:50 </h2>
             <textarea class ="noteEvent" multiple> Stuff happening </textarea>
@@ -70,7 +68,7 @@ for(let i in timeBlocks){
     let timeString = getHourString(timeBlocks[i]);
     
     let listElement = $('<li>');
-        listElement.attr('class','listHourEvent');
+        listElement.attr('class','listHourEvent rounded p-3 m-2 ');
         listElement.attr('data-time',timeBlocks[i]);
 
     let timeElement = $('<h2>');
@@ -82,7 +80,7 @@ for(let i in timeBlocks){
     //WHEN I click into a timeblock
 //    THEN I can enter an event
     let noteElement = $('<textarea>');
-        noteElement.attr('class','noteEvent');
+        noteElement.attr('class','noteEvent rounded');
 //    WHEN I refresh the page
 //    THEN the saved events persist
         noteElement.val( getNote(timeBlocks[i]) );
@@ -92,7 +90,7 @@ for(let i in timeBlocks){
 //    WHEN I click the save button for that timeblock
 //    THEN the text for that event is saved in local storage
     let saveElement = $('<button>');
-        saveElement.attr('class','saveEvent');
+        saveElement.attr('class','saveEvent btn  btn-info m-1');
         saveElement.text('save:💾')
 
         listElement.on('click',saveNote);
@@ -102,10 +100,10 @@ for(let i in timeBlocks){
 //    WHEN I view the timeblocks for that day
 //    THEN each timeblock is color coded to indicate whether it is in the past, present, or future
 //    let currentHour = 10;
-    if(currentHour === timeBlocks[i]){
-        listElement.attr('class','currentHourEvent');
-    }
+    if(currentHour == timeBlocks[i]){
+        listElement.attr('class','currentHourEvent rounded p-3 m-2');
+    } else 
     if(currentHour > timeBlocks[i]){
-        listElement.attr('class','pastHourEvent');
+        listElement.attr('class','pastHourEvent rounded p-3 m-2');
     }
 }
